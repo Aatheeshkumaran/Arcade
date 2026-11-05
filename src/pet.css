@@ -1,0 +1,32 @@
+/* Desktop pet cat — fixed bottom-right, same navy / cream / lime look in both themes */
+.pet{--pet:92px;position:fixed;right:14px;bottom:8px;width:var(--pet);height:var(--pet);z-index:12;pointer-events:none;user-select:none;-webkit-user-select:none}
+.pet-body{position:absolute;inset:0;will-change:transform}
+.pet-hopper,.pet-rot{position:absolute;inset:0;transform-origin:50% 100%}
+.pet-sprite{position:absolute;inset:0;background:url('/assets/hero-cat-sheet.png') 0 0/800% 400% no-repeat;transform-origin:50% 100%;filter:drop-shadow(0 0 1px #0a1122) drop-shadow(0 2px 0 #0a112288);pointer-events:none}
+.pet[data-mode="idle"] .pet-sprite{animation:petBreathe 2.6s ease-in-out infinite alternate}
+.pet-sprite.is-sleep{transform:scale(1.04,.86);filter:brightness(.78) drop-shadow(0 0 1px #0a1122)}
+.pet-shadow{position:absolute;left:22%;right:22%;bottom:3px;height:8px;border-radius:50%;background:#02061a;opacity:calc(.35 - var(--lift,0)*.2);transform:scale(calc(1 - var(--lift,0)*.35))}
+.pet-hit{position:absolute;left:18%;right:18%;top:20%;bottom:2%;background:transparent;border:0;padding:0;cursor:grab;pointer-events:auto;touch-action:none;border-radius:40% 40% 20% 20%}
+.pet[data-mode="drag"] .pet-hit{cursor:grabbing}
+.pet-hit:focus-visible{outline:2px dashed #b6f25b;outline-offset:2px}
+.pet-hide{position:absolute;top:2px;right:-2px;width:18px;height:18px;border-radius:50%;border:2px solid #0a1122;background:#f1ead2;color:#0a1122;font:700 12px/1 var(--mono);padding:0;display:grid;place-items:center;cursor:pointer;opacity:0;transform:scale(.7);transition:opacity .15s,transform .15s;pointer-events:auto}
+.pet:hover .pet-hide,.pet-hide:focus-visible{opacity:1;transform:none}
+.pet-bubble{position:absolute;bottom:calc(100% - 6px);left:50%;transform:translateX(calc(-50% + var(--nudge,0px)));width:max-content;max-width:210px;padding:9px 11px;background:#f1ead2;color:#0a1122;border:3px solid #0a1122;box-shadow:3px 3px 0 #0a1122;font:9px/1.7 var(--pixel);text-align:left;pointer-events:none;animation:petPop .18s steps(3)}
+.pet-bubble:after{content:'';position:absolute;top:100%;left:calc(50% - var(--nudge,0px));margin-left:-6px;border:6px solid transparent;border-top-color:#0a1122}
+.pet-bubble:before{content:'';position:absolute;top:calc(100% - 4px);left:calc(50% - var(--nudge,0px));margin-left:-3px;border:3px solid transparent;border-top-color:#f1ead2;z-index:1}
+.pet-heart{position:absolute;left:50%;bottom:62%;color:#ff7ac8;font:16px var(--mono);text-shadow:0 0 0 #0a1122,1px 1px 0 #0a1122,-1px -1px 0 #0a1122;pointer-events:none;animation:petHeart 1.2s ease-out forwards}
+.pet-zzz{position:absolute;right:6px;top:8px;pointer-events:none;font:700 11px var(--pixel);color:#c59bff}
+.pet-zzz i{position:absolute;font-style:normal;opacity:0;animation:petZ 2.4s ease-in-out infinite}
+.pet-zzz i:nth-child(2){animation-delay:.8s;right:-8px}.pet-zzz i:nth-child(3){animation-delay:1.6s;right:-16px}
+.pet-hopper.hop-0{animation:petHopA .5s cubic-bezier(.3,.7,.4,1)}
+.pet-hopper.hop-1{animation:petHopB .5s cubic-bezier(.3,.7,.4,1)}
+.pet-return{position:fixed;right:14px;bottom:12px;z-index:12;width:34px;height:34px;display:grid;place-items:center;background:#111a33;border:2px solid #2b3a6b;color:#f1ead2;font-size:15px;cursor:pointer;opacity:.7}
+.pet-return:hover{opacity:1;border-color:#b6f25b}
+@keyframes petBreathe{from{transform:scaleY(1)}to{transform:scaleY(1.03)}}
+@keyframes petHopA{0%{transform:translateY(0)}35%{transform:translateY(-22px) scale(.96,1.05)}70%{transform:translateY(0) scale(1.06,.92)}100%{transform:none}}
+@keyframes petHopB{0%{transform:translateY(0)}35%{transform:translateY(-22px) scale(.96,1.05)}70%{transform:translateY(0) scale(1.06,.92)}100%{transform:none}}
+@keyframes petHeart{0%{opacity:0;transform:translate(0,0) scale(.6)}15%{opacity:1}100%{opacity:0;transform:translate(var(--dx),-56px) scale(1.15)}}
+@keyframes petZ{0%{opacity:0;transform:translate(0,6px)}30%{opacity:1}100%{opacity:0;transform:translate(10px,-22px)}}
+@keyframes petPop{from{transform:translateX(calc(-50% + var(--nudge,0px))) scale(.85)}to{transform:translateX(calc(-50% + var(--nudge,0px))) scale(1)}}
+@media(max-width:640px){.pet{--pet:72px;right:8px}.pet-bubble{font-size:8px;max-width:170px}.pet-hide{opacity:1;transform:none}}
+@media(prefers-reduced-motion:reduce){.pet-hopper.hop-0,.pet-hopper.hop-1{animation:none}.pet[data-mode="idle"] .pet-sprite{animation:none}}

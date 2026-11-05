@@ -1,0 +1,32 @@
+/* Parallax hero scene — layered pixel-art room (replaces the old CSS-drawn DEV_ROOM) */
+.hero-art.hero-scene{
+  --px:0;--py:0;
+  container-type:inline-size;
+  aspect-ratio:2752/1536;min-height:0;
+  perspective:none;transform-style:flat;
+  background:#0b0a1c;border-color:#3a3566;
+  box-shadow:10px 10px 0 #b5f36a12;
+}
+.hero-art.hero-scene:before{display:none}
+.scene-stack{position:absolute;inset:0;overflow:hidden}
+.scene-layer{
+  position:absolute;inset:0;
+  /* grow each layer just enough to cover the travel, so edges never show */
+  --s:calc(1 + var(--d)/50);
+  transform:translate3d(calc(var(--px)*var(--d)*-1cqw),calc(var(--py)*var(--d)*-.6cqw),0) scale(var(--s));
+  will-change:transform;backface-visibility:hidden;
+}
+.scene-layer img{position:absolute;inset:0;width:100%;height:100%;display:block;user-select:none;pointer-events:none;image-rendering:auto}
+.layer-fx{mix-blend-mode:screen}
+.layer-fx img{opacity:.55}
+.scene-vignette{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at 50% 55%,transparent 55%,#05040f66 100%)}
+/* tags sit above the scene */
+.hero-art.hero-scene .floating-tag{transform:none;background:#0d0b1fd9;border-color:#4d4680;color:#d7ecd5}
+.hero-scene .art-caption{z-index:3;color:#b9b2e0;text-shadow:0 1px 2px #05040f}
+@media(max-width:650px){
+  .hero-art.hero-scene{aspect-ratio:5/4;min-height:0}
+  .scene-layer img{object-fit:cover;object-position:52% 50%}
+}
+@media(prefers-reduced-motion:reduce){
+  .scene-layer{transform:scale(1)}
+}
